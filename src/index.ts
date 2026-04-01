@@ -15,3 +15,25 @@ export function createSkeleton(input: any): any {
   
   return typeof input;
 }
+
+export function getDefaultValue(value: any): any {
+  if (value === null || value === undefined) {
+    return null;
+  }
+  if (Array.isArray(value)) {
+    return [];
+  }
+  if (typeof value === 'object') {
+    return {};
+  }
+  if (typeof value === 'number') {
+    return 0;
+  }
+  if (typeof value === 'string') {
+    return "";
+  }
+  if (typeof value === 'boolean') {
+    return false;
+  }
+  return null;
+}
