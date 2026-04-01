@@ -6,7 +6,7 @@ export function processArray(arr: any[]): any[] {
   const seen = new Set<string>();
 
   for (const item of arr) {
-    const skeleton = createSkeleton(item);
+    const skeleton = walk(item);
     const skeletonStr = JSON.stringify(skeleton);
     if (!seen.has(skeletonStr)) {
       seen.add(skeletonStr);
@@ -17,7 +17,7 @@ export function processArray(arr: any[]): any[] {
   return result;
 }
 
-export function createSkeleton(input: any): any {
+export function walk(input: any): any {
   if (Array.isArray(input)) {
     return processArray(input);
   }
@@ -26,13 +26,17 @@ export function createSkeleton(input: any): any {
     const skeleton: Record<string, any> = {};
     for (const key in input) {
       if (Object.prototype.hasOwnProperty.call(input, key)) {
-        skeleton[key] = createSkeleton(input[key]);
+        skeleton[key] = walk(input[key]);
       }
     }
     return skeleton;
   }
   
   return getDefaultValue(input);
+}
+
+export function createSkeleton(input: any): any {
+  return walk(input);
 }
 
 export function getDefaultValue(value: any): any {
