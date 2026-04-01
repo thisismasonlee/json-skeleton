@@ -11,10 +11,10 @@ describe('createSkeleton', () => {
     };
     
     const expected = {
-      name: 'string',
-      age: 'number',
-      isActive: 'boolean',
-      data: 'object'
+      name: '',
+      age: 0,
+      isActive: false,
+      data: null
     };
     
     expect(createSkeleton(input)).toEqual(expected);
@@ -27,8 +27,8 @@ describe('createSkeleton', () => {
     };
     
     const expected = {
-      tags: ['string'],
-      users: [{ id: 'number' }]
+      tags: [''],
+      users: [{ id: 0 }]
     };
     
     expect(createSkeleton(input)).toEqual(expected);

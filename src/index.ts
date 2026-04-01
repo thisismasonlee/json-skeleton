@@ -1,6 +1,25 @@
+export function processArray(arr: any[]): any[] {
+  if (!arr || arr.length === 0) {
+    return [];
+  }
+  const result: any[] = [];
+  const seen = new Set<string>();
+
+  for (const item of arr) {
+    const skeleton = createSkeleton(item);
+    const skeletonStr = JSON.stringify(skeleton);
+    if (!seen.has(skeletonStr)) {
+      seen.add(skeletonStr);
+      result.push(skeleton);
+    }
+  }
+
+  return result;
+}
+
 export function createSkeleton(input: any): any {
   if (Array.isArray(input)) {
-    return input.length > 0 ? [createSkeleton(input[0])] : [];
+    return processArray(input);
   }
   
   if (input !== null && typeof input === 'object') {
@@ -13,7 +32,7 @@ export function createSkeleton(input: any): any {
     return skeleton;
   }
   
-  return typeof input;
+  return getDefaultValue(input);
 }
 
 export function getDefaultValue(value: any): any {
